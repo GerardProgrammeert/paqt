@@ -1,66 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Description
+This application is developed for a job interview assessment at Paqt. 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+It allows call center to book rides for resident of Utrecht when WMO decision allows this. 
+Taxi firms can view the rides for only the area it is responsible for. 
 
-## About Laravel
+## Install
+To install this laravel(v10) app, please follow these steps 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+From the root of the project run 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+````
+./vendor/bin/sail up -d
+````
+This will create an image and a container with necessay dependencies to run this laravel project.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+After laravel is installed, run the installation script from the root of the project.
+````
+sh install.sh
+````
+This will run the migration files and seeders
 
-## Learning Laravel
+The following seeders will be run:
+#### DecisionSeeder 
+This seeder will create residents and a decisions. 
+These residents are needed to book rides. The decision contains balance for the budget.
+#### RideSeeder
+This seeder will create rides with a resident. 
+#### AccountSeeder
+This will create accounts. These are needed to view booked rides.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technical explanation
+This section will explain how the entities are related to each other and how the decision are reset. 
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### Resident
+Resident has a field area.
+It has a one on one relationship with decision and a one on many relationship with rides.  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Decision
+Decision has a one on one relation with resident. It contains a balance for the budget. In case a ride the distance will be subtracted from the balance.
+In case the decision is inactive or the distance of the ride exceeds the balence the ride will not be booked.  
 
-## Laravel Sponsors
+#### Accounts
+An account holds the area where it is responsible for executing the rides. 
+This is an integer value. This value is used to get the rides book by the residents.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### Rides
+When a ride is book it will update the balance on the decision. 
 
-### Premium Partners
+#### Scheduled Decision Job
+This job is run every day at midnight. It will fetch every active decision with a passed prolongation date.
+It will reset the balance and set the prolongation date for next year.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## How to use
 
-## Contributing
+To know how to use this api please read the [documentation on the endpoints](https://gerardprogrammeert.stoplight.io/docs/rides-booking-wmo/8b1jchhl3opvr-booking-rides-wmo)
+Here you can also find some curl examples on how to interact with the api.  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Book a ride example
+````
+curl --location --request POST 'http://localhost/api/rides/' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data-raw '{
+    "resident_id":"1",
+    "pickup_moment":"20213-12-30 13:00",
+    "from":"Barendrecht, Stationsweg 14", 
+    "to":"Rotterdam, Blaak 10", 
+    "distance":"150000"  
+}'
+````
 
-## Code of Conduct
+#### Get rides overview example
+````
+curl --location --request GET 'http://localhost/api/residents'
+````
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Get all residents example
+````
+curl --location --request GET 'http://localhost/api/residents'
+````
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
