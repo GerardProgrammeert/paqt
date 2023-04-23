@@ -5,20 +5,21 @@ It allows call center to book rides for resident of Utrecht when WMO decision al
 Taxi firms can view the rides for only the area it is responsible for. 
 
 ## Install
-To install this laravel(v10) app, please follow these steps 
+To install this laravel(v10) app, please follow these steps: 
 
 From the root of the project run 
 
 ````
-./vendor/bin/sail up -d
+# php artisan sail install
+# ./vendor/bin/sail up -d
 ````
-This will create an image and a container with necessay dependencies to run this laravel project.
+This will create an image and a container with dependencies to run this laravel project.
 
 After laravel is installed, run the installation script from the root of the project.
 ````
 sh install.sh
 ````
-This will run the migration files and seeders
+This script will run the migration files and seeders
 
 The following seeders will be run:
 #### DecisionSeeder 
