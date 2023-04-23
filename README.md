@@ -81,4 +81,6 @@ curl --location --request GET 'http://localhost/api/residents'
 curl --location --request GET 'http://localhost/api/residents'
 ````
 
+## Resources
+- [API documentation](https://gerardprogrammeert.stoplight.io/docs/rides-booking-wmo/8b1jchhl3opvr-booking-rides-wmo)
 
