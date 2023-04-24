@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\Feature\API\Rides;
 
-use App\Enums\AccountType;
 use App\Models\Account;
 use App\Models\Resident;
 use App\Models\Ride;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    use DatabaseMigrations, DatabaseTransactions;
+    use DatabaseTransactions;
 
     private const ENDPOINT = '/api/%s/rides';
 
     public function testCanFetchRidesAsATaxiFirm(): void
     {
         $account = Account::factory()->create([
-            'type' => AccountType::TAXI,
             'area' => 20,
         ]);
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\AccountType;
 use App\Http\Requests\StoreRideRequest;
 use App\Http\Resources\RideResource;
 use App\Models\Account;
@@ -27,11 +26,9 @@ class RideController extends Controller
     {
         $rides = Ride::query();
 
-        if ($account->type === AccountType::TAXI) {
-            $rides->whereHas('resident', function (Builder $query) use ($account) {
-                $query->where('area', '=', $account->area);
-            });
-        }
+        $rides->whereHas('resident', function (Builder $query) use ($account) {
+            $query->where('area', '=', $account->area);
+        });
 
         return RideResource::collection($rides->get())
             ->response();

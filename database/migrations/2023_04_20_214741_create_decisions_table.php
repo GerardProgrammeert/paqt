@@ -17,14 +17,15 @@ return new class extends Migration {
         Schema::create('decisions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('resident_id');
-            $table->float('balance', 10, 2);
+            $table->integer('balance');
             $table->date('prolongation_date');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 
             $table->foreign('resident_id')
                 ->references('id')
-                ->on('residents');
+                ->on('residents')
+                ->onDelete('cascade');
         });
     }
 

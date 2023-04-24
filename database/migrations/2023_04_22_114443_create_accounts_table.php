@@ -16,12 +16,13 @@ return new class extends Migration {
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type');
-            $table->string('area')->nullable();
+            $table->string('name', 255);
+            $table->integer('area');
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.

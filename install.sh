@@ -13,3 +13,5 @@ php artisan db:seed --class DecisionSeeder
 php artisan db:seed --class RideSeeder
 php artisan db:seed --class AccountSeeder
 echo "Ended seeding database"
+
+php artisan migrate --env=testing

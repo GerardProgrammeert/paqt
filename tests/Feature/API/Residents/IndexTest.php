@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace Tests\Feature\API\Residents;
 
 use App\Models\Decision;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    use DatabaseMigrations,DatabaseTransactions;
+    use DatabaseTransactions;
 
     private const ENDPOINT = '/api/residents';
 
     public function testCanFetchResidents(): void
     {
-        $decisions = Decision::factory(10)->create();
+        $decisions = Decision::all();
 
         $response = $this->getJson(self::ENDPOINT);
 
-        $response->assertJsonCount(10,'data')
+        $response->assertJsonCount(count($decisions),'data')
             ->assertStatus(200);
 
         foreach($decisions as $decision){

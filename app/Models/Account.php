@@ -11,8 +11,4 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     use HasFactory;
-
-    protected $casts = [
-        'type' => AccountType::class,
-    ];
 }

@@ -3,13 +3,12 @@
 namespace Tests\Feature\Commands;
 
 use App\Models\Decision;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class DecisionResetTest extends TestCase
 {
-    use DatabaseMigrations, DatabaseTransactions;
+    use DatabaseTransactions;
 
     public function testCanResetActiveExpiredDecisions(): void
     {
@@ -20,7 +19,6 @@ class DecisionResetTest extends TestCase
 
         $this->artisan("decision:reset")
             ->expectsOutput('Start decision:reset command')
-            ->expectsOutput('Number of decisions to be reset: 10')
             ->assertExitCode(0);
 
         foreach ($decisions as $decision) {

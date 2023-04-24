@@ -15,7 +15,7 @@ From the root of the project run
 ````
 This will create an image and a container with dependencies to run this laravel project.
 
-After laravel is installed, run the installation script from the root of the project.
+After laravel is installed, run the installation script from the root of the project inside the container.
 ````
 sh install.sh
 ````

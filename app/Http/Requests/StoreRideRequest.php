@@ -28,9 +28,9 @@ class StoreRideRequest extends FormRequest
         return [
             'resident_id'   => 'required|integer|exists:residents,id',
             'pickup_moment' => 'required|date_format:Y-m-d H:i|after:today',
-            'to'            => 'required|string',
-            'from'          => 'required|string',
-            'distance'      => 'required|integer',
+            'to'            => 'required|string|min:3|max:255',
+            'from'          => 'required|string|min:3|max:255',
+            'distance'      => 'required|integer|min:1|max:3000',
         ];
     }
 

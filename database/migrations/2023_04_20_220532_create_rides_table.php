@@ -18,15 +18,16 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('resident_id');
             $table->dateTime('pickup_moment');
-            $table->string('from');
-            $table->string('to');
+            $table->string('from', 255);
+            $table->string('to', 255);
             $table->unsignedFloat('distance');
             $table->boolean('is_driven')->default(false);
             $table->timestamps();
 
             $table->foreign('resident_id')
                 ->references('id')
-                ->on('residents');
+                ->on('residents')
+                ->onDelete('cascade');
         });
     }
 

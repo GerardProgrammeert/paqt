@@ -23,7 +23,6 @@ class AccountFactory extends Factory
         return [
             'name' => fake()->name(),
             'area' => fake()->randomNumber(2, false),
-            'type' => Arr::random([AccountType::CALL_CENTER, AccountType::TAXI]),
         ];
     }
 }

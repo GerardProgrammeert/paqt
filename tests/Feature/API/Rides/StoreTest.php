@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Tests\Feature\API\Rides;
 
 use App\Models\Decision;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class StoreTest extends TestCase
 {
-    use DatabaseMigrations, DatabaseTransactions;
+    use DatabaseTransactions;
 
     private const ENDPOINT = '/api/rides';
 
