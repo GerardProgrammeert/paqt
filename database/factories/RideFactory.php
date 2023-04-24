@@ -20,7 +20,7 @@ class RideFactory extends Factory
     public function definition(): array
     {
         return [
-            'distance'      => fake()->randomFloat(1, 2, 30),
+            'distance'      => fake()->randomNumber(2),
             'resident_id'   => Resident::all()->isNotEmpty() ? Resident::all()->random()->id :
                 Resident::factory(),
             'pickup_moment' => fake()->dateTimeThisYear(),
