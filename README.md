@@ -1,11 +1,11 @@
 ## Description
-This application is developed for a job interview assessment at Paqt. 
+This application is developed for a job interview at Paqt. 
 
-It allows call center to book rides for resident of Utrecht when WMO decision allows this. 
-Taxi firms can view the rides for only the area it is responsible for. 
+It allows call centers to book rides for residents of Utrecht when the WMO decision permits it. 
+Taxi firms can view rides for their own area. 
 
 ## Install
-To install this laravel(v10) app, please follow these steps: 
+To install this Laravel(v10) app, please follow these steps: 
 
 From the root of the project run 
 
@@ -13,9 +13,9 @@ From the root of the project run
 # php artisan sail install
 # ./vendor/bin/sail up -d
 ````
-This will create an image and a container with dependencies to run this laravel project.
+This will create an image and a container with dependencies to run this Laravel project.
 
-After laravel is installed, run the installation script from the root of the project inside the container.
+After Laravel is installed, run the installation script from the root of the project inside the container.
 ````
 sh install.sh
 ````
